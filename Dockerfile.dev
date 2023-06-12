@@ -1,0 +1,16 @@
+# Specify a base image
+FROM node:16-alpine
+
+# Define project root
+WORKDIR /app
+
+# Install depenendencies
+# Copy package.json from the host to the container
+# Run npm install in the container
+# Copy project files from the host to the container - this allows for updates to the project files locally without re-installing project dependencies
+COPY package.json .
+RUN npm install
+COPY . .
+
+# Container default command
+CMD ["npm", "run", "start"]

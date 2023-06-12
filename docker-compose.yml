@@ -1,0 +1,20 @@
+version: "3"
+services:
+  web: # Application container
+    build:
+      context: .
+      dockerfile: Dockerfile.dev # Since non-standard Dockerfile name is used it must be specified
+    ports:
+      - "3000:3000" # Map port on the host to the port in the container
+    volumes:
+      - /app/node_modules
+      - .:/app # Map project root directory on the host to the project root in the container
+  tests: # Tests container
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
